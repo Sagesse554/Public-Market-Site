@@ -135,7 +135,7 @@ class CallOfferForm(forms.ModelForm):
         Apl_budget = self.cleaned_data.get('Apl_budget')
 
         if Apl_budget <= 0 :
-            raise forms.ValidationError("Le budget ne peut être qu'un entier positif !")
+            raise forms.ValidationError("Le budget ne peut être qu'un nombre positif !")
         
         return Apl_budget
 
@@ -188,7 +188,7 @@ class Service1Form(forms.ModelForm):
         Ptn1_budget = self.cleaned_data.get('Ptn1_budget')
 
         if Ptn1_budget <= 0 :
-            raise forms.ValidationError("Le budget ne peut être qu'un entier positif !")
+            raise forms.ValidationError("Le budget ne peut être qu'un nombre positif !")
         
         return Ptn1_budget
 

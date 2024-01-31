@@ -9,7 +9,7 @@ class Projet_d_Approvisionnement(models.Model):
     Pjt_dateDebut = models.DateField()
     Pjt_dateFin = models.DateField()
     Pjt_objectifs = models.TextField()
-    Pjt_document = models.FileField(upload_to='Documents/Projet d\'Approvisionnement')
+    Pjt_document = models.ImageField(upload_to='Documents/Projet d\'Approvisionnement', null=True, blank=True)
     Pjt_budget = models.FloatField()
     Pjt_statut = models.CharField(max_length=20, choices=[
         ('EN_COURS', 'En cours'),

@@ -1,0 +1,122 @@
+{% extends 'base_sections.html' %}
+{% load static %}
+
+{% block title %} Contracts {% endblock title %}
+
+{% block body %} class="index-page bg-gray-200" {% endblock body %}
+
+{% block content %}
+
+
+<section class="my-5 py-5">
+
+    <div>
+        <div style="text-align: center;">
+        <h3>Contrats</h3>
+        {% if request.user.Ent_numero.Ent_numero.Rgs_numero != '1613978901' %}
+            <h6 class="text-secondary font-weight-normal pe-3">{{ request.user.Ent_numero.Ent_numero.Rgs_denomination }}</h6>
+        {% else %}
+            <h6 class="text-secondary font-weight-normal pe-3">E-Media Sarl U</h6>
+        {% endif %}
+        </div>
+    </div>
+
+    {% if request.user.Ent_numero.Ent_numero.Rgs_numero != '1613978901' %}
+        {% if cntn != 0 %}
+            {% for cn in cnt %}
+                <div style="margin: 6%;">
+                    <a href="{% url 'contrat' %}?cnt={{cn.Cnt_numero}}">
+                        <div style="margin: 4%;" class="card shadow-lg move-on-hover min-height-240 min-height-160">
+                        <div class="p-2 z-index-1" style="background-color: aliceblue;">
+                            <h3>
+                                <div>
+                                    Numéro : {{cn.Cnt_numero}}
+                                </div>
+                                <div>
+                                    Description : {{cn.vrs.Vrs_description}}
+                                </div>
+                                <div>
+                                    Occurence : {{cn.Cnt_occurence}}
+                                </div>
+                                <div>
+                                    Mode de Paiement : {{cn.vrs.Vrs_modePaiement}}
+                                </div>
+                                <div>
+                                    Mode de Résiliation : {{cn.Cnt_modeResiliation}}
+                                </div>
+                                <div>
+                                    Date de Début : {{cn.Cnt_dateDebut}}
+                                </div>
+                                <div>
+                                    Date de Fin : {{cn.vrs.Vrs_dateFin}}
+                                </div>
+                                <div>
+                                    Statut : {{cn.Cnt_statut}}
+                                </div>
+                            </h3>
+                        </div>
+                        <div>
+                            <div style="text-align: center;">
+                                <h3 class="mb-0">{{cn.Cnt_type}}</h3>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="card shadow-lg min-height-160 min-height-160" style="height: 60%; width: 60%;">
+                <img class="w-100 my-auto" src="{% static 'img/custom/data_not_found.png' %}" data-bs-toggle="tooltip" data-bs-placement="top" title="Pro Element" alt="content sections">
+            </div>
+        {% endif %}
+    {% else %}
+        {% if cntcn != 0 %}
+            {% for cnt in cntc %}
+                <div style="margin: 6%;">
+                    <a href="{% url 'contrat' %}?cnt={{cnt.Cnt_numero}}">
+                        <div style="margin: 4%;" class="card shadow-lg move-on-hover min-height-240 min-height-160">
+                        <div class="p-2 z-index-1" style="background-color: aliceblue;">
+                            <h3>
+                                <div>
+                                    Numéro : {{cnt.Cnt_numero}}
+                                </div>
+                                <div>
+                                    Description : {{cnt.vrs.Vrs_description}}
+                                </div>
+                                <div>
+                                    Occurence : {{cnt.Cnt_occurence}}
+                                </div>
+                                <div>
+                                    Mode de Paiement : {{cnt.vrs.Vrs_modePaiement}}
+                                </div>
+                                <div>
+                                    Mode de Résiliation : {{cnt.Cnt_modeResiliation}}
+                                </div>
+                                <div>
+                                    Date de Début : {{cnt.Cnt_dateDebut}}
+                                </div>
+                                <div>
+                                    Date de Fin : {{cnt.vrs.Vrs_dateFin}}
+                                </div>
+                                <div>
+                                    Statut : {{cnt.Cnt_statut}}
+                                </div>
+                            </h3>
+                        </div>
+                        <div>
+                            <div style="text-align: center;">
+                                <h3 class="mb-0">{{cnt.Cnt_type}}</h3>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="card shadow-lg min-height-160 min-height-160" style="height: 60%; width: 60%;">
+                <img class="w-100 my-auto" src="{% static 'img/custom/data_not_found.png' %}" data-bs-toggle="tooltip" data-bs-placement="top" title="Pro Element" alt="content sections">
+            </div>
+        {% endif %}
+    {% endif %}
+
+</section>
+
+{% endblock content %}

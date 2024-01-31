@@ -1,8 +1,17 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.views import PasswordChangeView
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.views import View
 from user.forms import SignUpForm, SignInForm, ChangeForm
+
+
+class ProfilView(LoginRequiredMixin, View):
+    template_name = 'profil.html'
+    
+    def get(self, request):
+        return render(request, self.template_name)
+
 
 class RegisterView(View):
     template_name = 'register.html'
@@ -55,7 +64,7 @@ class LoginView(View):
             user = authenticate(username=username, password=password)
 
             if user is not None:
-                print("Login successful!")
+                print("Login successful!", user.Ent_numero.Ent_numero.Rgs_numero)
                 login(request, user)
 
                 if next_url:

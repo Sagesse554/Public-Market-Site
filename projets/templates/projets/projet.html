@@ -8,23 +8,22 @@
 
 <section>
   <div class="page-header min-vh-100">
-    <div class="container">
-      <div class="row">
+    <div class="card-body">
+      <form method="post" action="#" role="form" enctype="multipart/form-data">
+        {% csrf_token %}
+                  
+        <div class="container">
+          <div class="row">
 
-        <div class="col-xl-4 col-lg-5 col-md-7 d-flex flex-column mx-lg-0 mx-auto">
-          <div class="card card-plain">
+            <div class="col-6 col-md-12 d-lg-flex d-flex d-none pe-0 top-0 end-0 flex-column mx-auto text-center">
+              <div class="position-relative h-100 m-3 px-7 border-radius-lg d-flex flex-column justify-content-center" style="background-color: aliceblue;">
 
-            <div style="padding: 40px;"></div>
-            <div class="card-header pb-0 text-left">
-              <h4 class="font-weight-bolder">Project</h4>
-              <p class="mb-0">Enter the details of the project and its steps</p>
-            </div>
+                <div style="padding: 40px;"></div>
+                <div class="card-header pb-0 text-left">
+                  <h4 class="font-weight-bolder">Project</h4>
+                  <p class="mb-0">Enter the details of the project and its steps</p>
+                </div>
             
-            <div class="card-body">
-              <form method="post" action="#" role="form">
-
-                {% csrf_token %}
-
                 {% for field in form %}
                 <div class="mb-3">
                     {{ field }}
@@ -32,77 +31,28 @@
                 <span class="text-danger"> {{ field.errors }} </span>
                 {% endfor %}
                 
-                {% for form_step1 in formset %}
-                <div class="formset-row">
-                  {% for field in form_step1 %}
-                  <div class="mb-3">
-                    {{ field }}
-                  </div>
-                  <span class="text-danger"> {{ field.errors }} </span>
-                  {% endfor %}
-                </div>
-                {% endfor %}
-
-                <div class="text-center">
-                  <button type="submit" class="btn btn-lg bg-gradient-primary btn-lg w-100 mt-4 mb-0">Save</button>
-                </div>
-
-              </form>
+              <div style="padding: 40px;"></div>
+              </div>
             </div>
+          </div>
+
+          <div class="row">
+
+            <div class="text-center">
+              <button type="submit" name="button" id="submit-all" class="btn btn-lg bg-gradient-primary btn-lg w-40 mt-4 mb-0">Save</button>
+            </div>
+            <div style="padding: 30px;"></div>
 
           </div>
-        </div>
 
-        <div class="col-6 d-lg-flex d-none h-100 my-auto pe-0 position-absolute top-0 end-0 text-center justify-content-center flex-column">
-          <div class="position-relative bg-gradient-primary h-100 m-3 px-7 border-radius-lg d-flex flex-column justify-content-center">
-            <img src="{% static 'img/shapes/pattern-lines.svg' %}" alt="pattern-lines" class="position-absolute opacity-4 start-0">
-            <div class="position-relative">
-              <img class="max-width-500 w-100 position-relative z-index-2" src="{% static 'img/illustrations/chat.png' %}">
-            </div>
-            <h4 class="mt-5 text-white font-weight-bolder">"Attention is the new currency"</h4>
-            <p class="text-white">The more effortless the writing looks, the more effort the writer actually put into the process.</p>
-          </div>
         </div>
-
-      </div>
+      </form>
     </div>
   </div>
 </section>
 
-<script>
-  function addForm() {
-    const formIdx = parseInt($('#id_form-TOTAL_FORMS').val());
-    const template = $('.formset-row:first').clone();
-    template.find(':input').val('');
-    template.find('.delete-row').show();
-    template.find('input[id$=id]').attr('name', `form-${formIdx}-id`).val('');
-    $('.formset').append(template);
-    $('#id_form-TOTAL_FORMS').val(formIdx + 1);
-  }
-
-  function deleteForm(row) {
-    row.find('.delete-row input').prop('checked', true);
-    row.hide();
-  }
-
-  $(document).ready(function () {
-    $('.formset .formset-row .delete-row').hide();
-    $('.formset .formset-row:not(:last)').find('.delete-row').show();
-
-    $('.formset .formset-row .delete-row').click(function () {
-      deleteForm($(this).closest('.formset-row'));
-    });
-
-    $('#add-form').click(function () {
-      addForm();
-    });
-  });
-</script>
-
 {% endblock content %}
 
 {% block footer %}
-
-{% include 'footer_signin.html' %}
 
 {% endblock footer %}

@@ -1,0 +1,67 @@
+{% extends 'base_sections.html' %}
+{% load static %}
+
+{% block title %} Enterprises {% endblock title %}
+
+{% block body %} class="index-page bg-gray-200" {% endblock body %}
+
+{% block content %}
+
+
+<section class="my-5 py-5">
+
+    <div>
+        <div style="text-align: cEnter;">
+          <h3>Entreprises</h3>
+          {% if ami is not None %}
+            <h6 class="text-secondary font-weight-normal pe-3">{{ami.Ami_titre}}</h6>
+          {% else %}
+            <h6 class="text-secondary font-weight-normal pe-3">E-media Public Market</h6>
+          {% endif %}
+        </div>
+    </div>
+
+  {% if entsn != 0 %}
+    {% for ent in ents %}
+        <div style="margin: 6%;">
+            <a href="javascript:;">
+                <div style="margin: 4%;" class="card shadow-lg move-on-hover min-height-240 min-height-160">
+                <div class="p-2 z-index-1" style="background-color: aliceblue;">
+                    <h3>
+                        <div>
+                            Numéro : {{ent.Ent_numero}}
+                        </div>
+                        <div>
+                            Date de création : {{ent.Ent_dateCreation}}
+                        </div>
+                        <div>
+                            Adresse : {{ent.manif.Mnf_adresse}}
+                        </div>
+                        <div>
+                            Téléphone : {{ent.manif.Mnf_telephone}}
+                        </div>
+                        <div>
+                            Mail : {{ent.manif.Mnf_email}}
+                        </div>
+                        <div>
+                            Téléphone : {{ent.manif.Mnf_siteWeb}}
+                        </div>
+                    </h3>
+                </div>
+                <div>
+                    <div style="text-align: center;">
+                    <h3 class="mb-0">{{ent.manif.Mnf_denomination}}</h3>
+                    </div>
+                </div>
+            </a>
+        </div>
+    {% endfor %}
+  {% else %}
+    <div class="card shadow-lg min-height-160 min-height-160" style="height: 60%; width: 60%;">
+      <img class="w-100 my-auto" src="{% static 'img/custom/data_not_found.png' %}" data-bs-toggle="tooltip" data-bs-placement="top" title="Pro Element" alt="content sections">
+    </div>
+  {% endif %}
+
+</section>
+
+{% endblock content %}

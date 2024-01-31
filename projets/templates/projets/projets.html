@@ -1,0 +1,87 @@
+{% extends 'base_sections.html' %}
+{% load static %}
+
+{% block title %} Projects {% endblock title %}
+
+{% block body %} class="index-page bg-gray-200" {% endblock body %}
+
+{% block content %}
+
+
+<section class="my-5 py-5">
+
+    <div>
+        <div style="text-align: center;">
+          <h3>Projets</h3>
+          <h6 class="text-secondary font-weight-normal pe-3">E-media Sarl U</h6>
+        </div>
+    </div>
+
+  {% if pjtn != 0 %}
+    {% for pj in pjt %}
+        <div style="margin: 6%;">
+            <a href="{% url 'projet' %}?pjt={{pj.Pjt_numero}}">
+                <div style="margin: 4%;" class="card shadow-lg move-on-hover min-height-240 min-height-160">
+                <div class="p-2 z-index-1" style="background-color: aliceblue;">
+                    <h3>
+                        <div>
+                            Numéro : {{pj.Pjt_numero}}
+                        </div>
+                        <div>
+                            Description : {{pj.Pjt_description}}
+                        </div>
+                        <div>
+                            Date de début : {{pj.Pjt_dateDebut}}
+                        </div>
+                        <div>
+                            Date de fin : {{pj.Pjt_dateFin}}
+                        </div>
+                        <div>
+                            Budget : {{pj.Pjt_budget}}
+                        </div>
+                        <div>
+                            Statut : {{pj.Pjt_statut}}
+                        </div>
+                    </h3>
+                </div>
+                <div>
+                    <div style="text-align: center;">
+                    <h3 class="mb-0">{{pj.Pjt_titre}}</h3>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="row">
+            <div class="d-flex justify-content-between">
+                <div class="text-center col-md-6">
+                    <button type="button" name="button" id="button" class="btn btn-lg btn-lg w-100%" style="background-color: white;">
+                        <a href="{% url 'offercall' %}?pjt={{pj.Pjt_numero}}">Appels d'Offre</a>
+                    </button>
+                </div>
+                <div class="text-center col-md-6">
+                    <button type="button" name="button" id="button" class="btn btn-lg btn-lg w-100%" style="background-color: white;">
+                        <a href="{% url 'offer' %}?pjt={{pj.Pjt_numero}}">Publier un Appel</a>
+                    </button>
+                </div>
+            </div>     
+        </div>
+    {% endfor %}
+  {% else %}
+    <div class="card shadow-lg move-on-hover min-height-160 min-height-160" style="height: 60%; width: 60%;">
+      <img class="w-100 my-auto" src="{% static 'img/custom/data_not_found.png' %}" data-bs-toggle="tooltip" data-bs-placement="top" title="Pro Element" alt="content sections">
+    </div>
+  {% endif %}
+
+  <div style="padding: 2%;"></div>
+  <div class="row">
+    <div class="text-center">
+        <button type="button" name="button" id="button" class="btn btn-lg btn-lg w-40 mt-4 mb-0" style="background-color: white;">
+            <a href="{% url 'project' %}">Créer</a>
+        </button>
+    </div>
+  </div>
+
+</section>
+
+{% endblock content %}

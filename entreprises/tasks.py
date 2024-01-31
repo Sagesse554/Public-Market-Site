@@ -1,8 +1,6 @@
-from celery import shared_task
 from django.utils import timezone
 from projets.models import Etape1
 
-@shared_task
 def update_etape_statuses():
     today = timezone.now().date()
     etapes = Etape1.objects.all()

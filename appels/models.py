@@ -9,17 +9,18 @@ class Appel_a_Manifestation(models.Model):
     Ami_dateDebut = models.DateField()
     Ami_dateFin = models.DateField()
     Ami_delaiValidite = models.IntegerField()
-    Ami_document = models.FileField(upload_to='Documents/Appel à Manifestation/')
+    Ami_document = models.ImageField(upload_to='Documents/AppelaManifestation/')
     Ami_coordonnees = models.CharField(max_length=160)
     Ami_statut = models.CharField(max_length=20, choices=[
         ('EN_COURS', 'En cours'),
         ('EN_ATTENTE', 'En attente'),
         ('TERMINE', 'Terminé'),
     ])
-    Ami_Entreprises = models.ManyToManyField('entreprises.Entreprise', through='entreprises.Manifestation', null=True)
+    Ami_Entreprises = models.ManyToManyField('entreprises.Entreprise', through='entreprises.Manifestation')
     
     def __str__(self):
         return f"{self.Ami_numero} {self.Ami_titre}"
+
 
 class Appel_d_Offre(models.Model):
     Apl_numero = models.CharField(primary_key=True, validators=[MinLengthValidator(8)], max_length=16)
@@ -29,7 +30,7 @@ class Appel_d_Offre(models.Model):
     Apl_exigences = models.TextField()
     Apl_dateDebut = models.DateField()
     Apl_dateFin = models.DateField()
-    Apl_document = models.FileField(upload_to='Documents/Appel d\'Offre')
+    Apl_document = models.ImageField(upload_to='Documents/AppeldOffre/')
     Apl_coordonnees = models.CharField(max_length=160)
     Apl_budget = models.FloatField()
     Apl_statut = models.CharField(max_length=20, choices=[
@@ -44,6 +45,7 @@ class Appel_d_Offre(models.Model):
     def __str__(self):
         return f"{self.Apl_numero} {self.Apl_titre}"
 
+
 class Prestation1(models.Model):
     Ptn1_id = models.AutoField(primary_key=True)
     Ctg_id = models.ForeignKey('entreprises.Categorie', on_delete=models.CASCADE)
@@ -55,6 +57,7 @@ class Prestation1(models.Model):
     def __str__(self):
         return f"{self.Ptn1_description} {self.Ptn1_delai} jrs {self.Ptn1_quantite} (qté) {self.Ptn1_budget} francs"
 
+
 class Critere(models.Model):
     Crt_id = models.AutoField(primary_key=True)
     Crt_intitule = models.CharField(max_length=32)
@@ -62,6 +65,7 @@ class Critere(models.Model):
     
     def __str__(self):
         return f"{self.Crt_intitule}"
+
 
 class Condition(models.Model):
     Cnd_id = models.AutoField(primary_key=True)
@@ -75,6 +79,7 @@ class Condition(models.Model):
     
     def __str__(self):
         return f"{self.Apl_numero} {self.Crt_id}"
+
 
 class Allocation3(models.Model):
     Alc3_id = models.AutoField(primary_key=True)

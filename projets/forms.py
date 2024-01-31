@@ -1,5 +1,4 @@
 from django import forms
-from django.forms import formset_factory
 from projets.models import Projet_d_Approvisionnement, Etape1
 
 
@@ -59,15 +58,12 @@ class ProjectForm(forms.ModelForm):
         Pjt_budget = self.cleaned_data.get('Pjt_budget')
 
         if Pjt_budget <= 0:
-            raise forms.ValidationError("Le budget ne peut être qu'un entier positif non inférieur à la somme de ceux des étapes !")
+            raise forms.ValidationError("Le budget ne peut être qu'un nombre positif non inférieur à la somme de ceux des étapes !")
         
         return Pjt_budget
 
 
 class Step1Form(forms.ModelForm):
-    def __init__(self, project_form, *args, **kwargs):
-        super(Step1Form, self).__init__(*args, **kwargs)
-        self.project_form = project_form
     
     class Meta:
         model = Etape1
@@ -102,33 +98,11 @@ class Step1Form(forms.ModelForm):
                 'class': 'form-control form-control-lg'
             })
         }
-        
-    def clean_Etp1_dateDebut(self):
-        Etp1_dateDebut = self.cleaned_data.get('Etp1_dateDebut')
-        Pjt_dateFin = self.project_form.cleaned_data.get('Pjt_dateFin')
-
-        if Etp1_dateDebut <= Pjt_dateFin:
-            raise forms.ValidationError("Respectez les limites du projet !")
-        
-        return Etp1_dateDebut
-    
-    def clean_Etp1_dateFin(self):
-        Etp1_dateFin = self.cleaned_data.get('Etp1_dateFin')
-        Etp1_dateDebut = self.cleaned_data.get('Etp1_dateDebut')
-        Pjt_dateFin = self.project_form.cleaned_data.get('Pjt_dateFin')
-
-        if Pjt_dateFin <= Etp1_dateFin or Etp1_dateFin <= Etp1_dateDebut:
-            raise forms.ValidationError("Respectez l'ordre des dates et les limites du projet !")
-        
-        return Etp1_dateFin
     
     def clean_Etp1_budget(self):
         Etp1_budget = self.cleaned_data.get('Etp1_budget')
 
         if Etp1_budget <= 0 :
-            raise forms.ValidationError("Le budget ne peut être qu'un entier positif !")
+            raise forms.ValidationError("Le budget ne peut être qu'un nombre positif !")
 
         return Etp1_budget
-
-
-Step1FormSet = formset_factory(Step1Form, extra=1, can_delete=True)

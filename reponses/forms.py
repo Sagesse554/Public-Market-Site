@@ -40,7 +40,7 @@ class PaymentForm(forms.ModelForm):
         Pmt_montant = self.cleaned_data.get('Pmt_montant')
 
         if Pmt_montant <= 0 :
-            raise forms.ValidationError("Le montant ne peut être qu'un entier positif !")
+            raise forms.ValidationError("Le montant ne peut être qu'un nombre positif !")
         
         return Pmt_montant
     
@@ -85,7 +85,7 @@ class OfferForm(forms.ModelForm):
         Ofr_montant = self.cleaned_data.get('Ofr_montant')
 
         if Ofr_montant <= 0 :
-            raise forms.ValidationError("Le montant ne peut être qu'un entier positif !")
+            raise forms.ValidationError("Le montant ne peut être qu'un nombre positif !")
         
         return Ofr_montant
 
@@ -128,20 +128,17 @@ class ContractForm(forms.ModelForm):
 
 
 class VersionForm(forms.ModelForm):
-    def __init__(self, contract_form, *args, **kwargs):
-        super(VersionForm, self).__init__(*args, **kwargs)
-        self.contract_form = contract_form
-
+    
     class Meta:
         model = Version
-        fields = ['Vrs_description', 'Vrs_momentSignature', 'Vrs_dateFin', 'Vrs_document', 'Vrs_modePaiement', 'Vrs_statut']
+        fields = ['Vrs_description', 'Vrs_moment', 'Vrs_dateFin', 'Vrs_document', 'Vrs_modePaiement', 'Vrs_statut']
 
         widgets = {
             'Vrs_description': forms.TextInput(attrs={
                 'class': 'form-control form-control-lg',
                 'placeholder': 'Description'
             }),
-            'Vrs_momentSignature': forms.DateTimeInput(attrs={
+            'Vrs_moment': forms.DateTimeInput(attrs={
                 'class': 'form-control form-control-lg',
                 'type': 'datetime-local'
             }),
@@ -160,21 +157,9 @@ class VersionForm(forms.ModelForm):
                 'class': 'form-control form-control-lg'
             })
         }
-        
-    def clean_Vrs_dateFin(self):
-        Vrs_dateFin = self.cleaned_data.get('Vrs_dateFin')
-        Cnt_dateDebut = self.contract_form.cleaned_data.get('Cnt_dateDebut')
-
-        if Cnt_dateDebut <= Vrs_dateFin:
-            raise forms.ValidationError("Respectez les limites du contrat !")
-        
-        return Vrs_dateFin
 
 
 class Step2Form(forms.ModelForm):
-    def __init__(self, contract_form, *args, **kwargs):
-        super(Step2Form, self).__init__(*args, **kwargs)
-        self.contract_form = contract_form
     
     class Meta:
         model = Etape2
@@ -206,31 +191,11 @@ class Step2Form(forms.ModelForm):
             })
         }
         
-    def clean_Etp2_datePrevue(self):
-        Etp2_datePrevue = self.cleaned_data.get('Etp2_datePrevue')
-        Cnt_dateFin = self.contract_form.cleaned_data.get('Cnt_dateFin')
-
-        if Etp2_datePrevue <= Cnt_dateFin:
-            raise forms.ValidationError("Respectez les limites du projet !")
-        
-        return Etp2_datePrevue
-    
-    def clean_Etp2_dateExecution(self):
-        if Etp2_dateExecution:
-            Etp2_dateExecution = self.cleaned_data.get('Etp2_dateExecution')
-            Etp2_datePrevue = self.cleaned_data.get('Etp2_datePrevue')
-            Cnt_dateFin = self.contract_form.cleaned_data.get('Cnt_dateFin')
-
-            if Cnt_dateFin <= Etp2_dateExecution or Etp2_dateExecution <= Etp2_datePrevue:
-                raise forms.ValidationError("Respectez l'ordre des dates et les limites du projet !")
-        
-        return Etp2_dateExecution
-    
     def clean_Etp2_budget(self):
         Etp2_budget = self.cleaned_data.get('Etp2_budget')
 
         if Etp2_budget <= 0 :
-            raise forms.ValidationError("Le budget ne peut être qu'un entier positif !")
+            raise forms.ValidationError("Le budget ne peut être qu'un nombre positif !")
 
         return Etp2_budget
 

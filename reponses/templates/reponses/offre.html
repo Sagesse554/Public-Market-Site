@@ -1,0 +1,37 @@
+{% extends 'base_sections.html' %}
+{% load static %}
+
+{% block title %} Offer Page {% endblock title %}
+{% block body %} class="sign-in-illustration" {% endblock body %}
+
+{% block content %}
+
+
+<section>
+  <div class="page-header min-vh-100">
+    <div class="container">
+
+        <article>
+            <h2>{{ offre.Ofr_numero }}</h2>
+            <p>Date: {{ offre.Ofr_date }}</p>
+            <p>Montant: {{ offre.Ofr_montant }}</p>
+            <p>Description: {{ offre.Ofr_description }}</p>
+            <p>Spécifications: {{ offre.Ofr_specifications }}</p>
+            <p>Statut: {{ offre.get_Ofr_statut_display }}</p>
+            <p>Évaluation: {{ offre.Ofr_evaluation }}</p>
+            {% if offre.Ofr_document %}
+                <img src="{{ offre.Ofr_document.url }}" alt="Document">
+            {% endif %}
+        </article>
+        
+    </div>
+  </div>
+</section>
+
+{% endblock content %}
+
+{% block footer %}
+
+{% include 'footer_signin.html' %}
+
+{% endblock footer %}

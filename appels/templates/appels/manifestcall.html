@@ -1,0 +1,95 @@
+{% extends 'base_sections.html' %}
+{% load static %}
+
+{% block title %} Manifest Calls {% endblock title %}
+
+{% block body %} class="index-page bg-gray-200" {% endblock body %}
+
+{% block content %}
+
+
+<section class="my-5 py-5">
+
+  <div>
+    <div style="text-align: center;">
+      <h3>Appels à Manifestation d'Intérêt</h3>
+      <h6 class="text-secondary font-weight-normal pe-3">Commencez par enregistrer votre entreprise</h6>
+    </div>
+  </div>
+
+  {% if amicn != 0 %}
+    {% for ami in amic %}
+      <div style="margin: 6%;">
+        <a href="{% url 'manifcall' %}?ami={{ami.Ami_numero}}">
+          <div style="margin: 4%;" class="card shadow-lg move-on-hover min-height-240 min-height-160">
+            <div class="p-2 z-index-1" style="background-color: aliceblue;">
+              <h3>
+                  <div>
+                      Numéro : {{ami.Ami_numero}}
+                  </div>
+                  <div>
+                      Description : {{ami.Ami_description}}
+                  </div>
+                  <div>
+                      Date de début : {{ami.Ami_dateDebut}}
+                  </div>
+                  <div>
+                      Date limite : {{ami.Ami_dateFin}}
+                  </div>
+                  <div>
+                      Délai de validité : {{ami.Ami_delaiValidite}} jours
+                  </div>
+                  <div>
+                      A contacter : {{ami.Ami_coordonnees}}
+                  </div>
+                  <div>
+                      Statut : {{ami.Ami_statut}}
+                  </div>
+              </h3>
+            </div>
+              <div style="text-align: center;">
+              <h3 class="mb-0">{{ami.Ami_titre}}</h3>
+              <p class="text-secondary text-sm">{{ami.entreprise_count}} Réponses</p>
+              </div>
+          </div>
+        </a>
+
+        {% if request.user.is_authenticated %}
+          {% if request.user.Ent_numero.Ent_numero.Rgs_numero != '1613978901' %}
+            <div class="text-center">
+                <button type="button" name="button" id="button" class="btn btn-lg btn-lg w-80" style="background-color: white;">
+                    <a href="{% url 'manifest' %}?ami={{ami.Ami_numero}}">Postuler</a>
+                </button>
+            </div>
+            {% else %}
+              <div class="text-center">
+                  <button type="button" name="button" id="button" class="btn btn-lg btn-lg w-80" style="background-color: white;">
+                      <a href="{% url 'entreprises' %}?ami={{ami.Ami_numero}}">Entreprises</a>
+                  </button>
+              </div>
+            {% endif %}
+        {% endif %}
+
+      </div>
+    {% endfor %}
+  {% else %}
+    <div class="card shadow-lg move-on-hover min-height-160 min-height-160">
+        <img class="w-100 my-auto" src="{% static 'img/custom/data_not_found.png' %}" data-bs-toggle="tooltip" data-bs-placement="top" title="Pro Element" alt="content sections">
+    </div>
+  {% endif %}
+
+  {% if request.user.is_authenticated %}
+    {% if request.user.Ent_numero.Ent_numero.Rgs_numero == '1613978901' %}
+      <div class="row">
+        <div class="text-center">
+            <button type="button" name="button" id="button" class="btn btn-lg btn-lg w-40 mt-4 mb-0" style="background-color: white;">
+                <a href="{% url 'callmanifest' %}">Créer</a>
+            </button>
+        </div>
+      </div>
+    {% endif %}
+  {% endif %}
+
+</section>
+
+{% endblock content %}

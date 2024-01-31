@@ -12,7 +12,7 @@ class Utilisateur(AbstractUser):
             message="Le numéro de téléphone doit être au format valide."
         ), MinLengthValidator(8)
     ])
-    Usr_profil = models.ImageField(upload_to='media/Images/Profils/', null=True, blank=True)
+    Usr_profil = models.ImageField(upload_to='Images/Profils/', null=True, blank=True)
     
     class Meta:
         verbose_name_plural = "Utilisateurs"

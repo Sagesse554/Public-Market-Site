@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, UsernameField, PasswordChangeForm
-from entreprises.models import Entreprise
+from entreprises.models import Entreprise, Registre
 from user.models import Utilisateur
 
 
@@ -44,11 +44,11 @@ class SignUpForm(UserCreationForm):
         Ent_numero = self.cleaned_data.get('Ent_numero_entry')
 
         try:
-            entreprise = Entreprise.objects.get(Ent_numero=Ent_numero)
-            if entreprise == Entreprise.objects.order_by('id').first() :
+            entreprise = Entreprise.objects.get(Ent_numero=Registre.objects.get(Rgs_numero=Ent_numero))
+            if Ent_numero == "1613978901" :
                 raise forms.ValidationError("Veuillez voir l'administrateur pour un telle opération.")
 
-        except Entreprise.DoesNotExist:
+        except Registre.DoesNotExist or Entreprise.DoesNotExist:
             raise forms.ValidationError("L'entreprise avec ce numéro ne s'est pas manifestée.")
         
         return Ent_numero

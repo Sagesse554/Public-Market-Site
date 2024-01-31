@@ -28,7 +28,7 @@ class Manifestation(models.Model):
     Ami_numero = models.ForeignKey('appels.Appel_a_Manifestation', on_delete=models.CASCADE)
     Ent_numero = models.ForeignKey('Entreprise', on_delete=models.CASCADE)
     Mnf_denomination = models.CharField(max_length=64)
-    Mnf_date = models.DateField(auto_now_add=True)
+    Mnf_moment = models.DateTimeField(auto_now_add=True)
     Mnf_logo = models.ImageField(upload_to='Images/Logos/', null=True, blank=True)
     Mnf_adresse = models.CharField(max_length=96)
     Mnf_telephone = models.CharField(max_length=16, validators=[
@@ -40,8 +40,8 @@ class Manifestation(models.Model):
     Mnf_email = models.EmailField()
     Mnf_siteWeb = models.CharField(max_length=48, null=True, blank=True)
     Mnf_document = models.FileField(upload_to='Documents/Manifestation/')
-    Mnf_prestations = models.ManyToManyField('Personnel', through='Allocation1', null=True)
-    Mnf_prestations = models.ManyToManyField('Materiel', through='Allocation2', null=True)
+    Mnf_personnel = models.ManyToManyField('Personnel', through='Allocation1')
+    Mnf_materiel = models.ManyToManyField('Materiel', through='Allocation2')
 
     class Meta:
         constraints = [
@@ -68,7 +68,7 @@ class Reference(models.Model):
         ('EN_ATTENTE', 'En attente'),
         ('TERMINEE', 'Terminée'),
     ])
-    Rfc_categories = models.ManyToManyField('Categorie', through='Prestation3', null=True)
+    Rfc_categories = models.ManyToManyField('Categorie', through='Prestation3')
     
     def __str__(self):
         return f"{self.Ent_numero} {self.Rfc_titre}"
@@ -84,7 +84,7 @@ class Prestation3(models.Model):
     Ptn3_id = models.AutoField(primary_key=True)
     Rfc_id = models.ForeignKey('Reference', on_delete=models.CASCADE)
     Ctg_id = models.ForeignKey('Categorie', on_delete=models.CASCADE)
-    Ptn3_description = models.TextField()
+    Ptn3_description = models.TextField(null=True, blank=True)
 
     class Meta:
         constraints = [

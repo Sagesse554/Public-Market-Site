@@ -3,7 +3,7 @@ from django.core.validators import MinLengthValidator
 
 
 class Offre(models.Model):
-    Ofr_numero = models.CharField(primary_key=True, max_length=16)
+    Ofr_numero = models.CharField(primary_key=True, validators=[MinLengthValidator(8)], max_length=16)
     Apl_numero = models.ForeignKey('appels.Appel_d_Offre', on_delete=models.CASCADE)
     Ent_numero = models.ForeignKey('entreprises.Entreprise', on_delete=models.CASCADE)
     Ofr_description = models.TextField()
@@ -11,7 +11,7 @@ class Offre(models.Model):
     Ofr_montant = models.FloatField()
     Ofr_date = models.DateField(auto_now_add=True)
     Ofr_evaluation = models.FloatField(null=True)
-    Ofr_document = models.FileField(upload_to='Documents/Offre')
+    Ofr_document = models.ImageField(upload_to='Documents/Offre/')
     Ofr_statut = models.CharField(max_length=24, choices=[
         ('EN_EVALUATION', 'En évaluation'),
         ('ACCEPTEE', 'Acceptée'),
@@ -40,7 +40,7 @@ class Contrat(models.Model):
         ('EN_COURS', 'En cours'),
         ('RESILIE', 'Résilié'),
         ('ACHEVE', 'Achevé'),
-    ], default = 'EN_EVALUATION')
+    ], default = 'EN_VALIDATION')
     Cnt_indicateurs = models.ManyToManyField('Indicateur', through='Evaluation2')
     
     def __str__(self):
@@ -51,9 +51,9 @@ class Version(models.Model):
     Vrs_id = models.AutoField(primary_key=True)
     Cnt_numero = models.ForeignKey('Contrat', on_delete=models.CASCADE)
     Vrs_description = models.TextField()
-    Vrs_momentSignature = models.DateTimeField(null=True, blank=True)
+    Vrs_moment = models.DateTimeField(null=True, blank=True)
     Vrs_dateFin = models.DateField()
-    Vrs_document = models.FileField(upload_to='Documents/Contrat')
+    Vrs_document = models.ImageField(upload_to='Documents/Contrat', null=True, blank=True)
     Vrs_modePaiement = models.CharField(max_length=96)
     Vrs_statut = models.CharField(max_length=20, choices=[
         ('EN_VALIDATION', 'En validation'),
@@ -115,7 +115,7 @@ class Paiement(models.Model):
     Pmt_description = models.TextField()
     Pmt_montant = models.FloatField()
     Pmt_date = models.DateField()
-    Pmt_document = models.FileField(upload_to='Documents/Paiement')
+    Pmt_document = models.ImageField(upload_to='Documents/Paiement', blank=True, null=True)
     Pmt_statut = models.CharField(max_length=20, choices=[
         ('EN_VALIDATION', 'En validation'),
         ('INVALIDE', 'Invalidé'),

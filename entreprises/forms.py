@@ -1,6 +1,6 @@
 from django import forms
 from django.forms import formset_factory
-from entreprises.models import Registre, Entreprise, Manifestation, Reference, Prestation3, Prestation2, Personnel, Materiel, Allocation1, Allocation2
+from entreprises.models import Registre, Entreprise, Manifestation, Reference, Prestation3, Prestation2, Personnel, Materiel, Allocation1, Allocation2, Categorie
 
 
 class EnterpriseForm(forms.ModelForm):
@@ -75,10 +75,15 @@ class ManifestForm(forms.ModelForm):
 
 
 class ReferenceForm(forms.ModelForm):
+    Rfc_categories = forms.ModelMultipleChoiceField(
+        queryset=Categorie.objects.all(),
+        widget=forms.SelectMultiple(attrs={
+            'class': 'form-control form-control-lg',
+        }))
 
     class Meta:
         model = Reference
-        fields = ['Rfc_titre', 'Rfc_description', 'Rfc_client', 'Rfc_coordonnees', 'Rfc_document', 'Rfc_typeContrat', 'Rfc_dateDebut', 'Rfc_dateFin', 'Rfc_montant', 'Rfc_statut']
+        fields = ['Rfc_titre', 'Rfc_description', 'Rfc_client', 'Rfc_coordonnees', 'Rfc_document', 'Rfc_typeContrat', 'Rfc_dateDebut', 'Rfc_dateFin', 'Rfc_montant', 'Rfc_statut', 'Rfc_categories']
 
         widgets = {
             'Rfc_titre': forms.TextInput(attrs={
@@ -134,15 +139,12 @@ class ReferenceForm(forms.ModelForm):
         Rfc_montant = self.cleaned_data.get('Rfc_montant')
 
         if Rfc_montant <= 0 :
-            raise forms.ValidationError("Le montant ne peut être qu'un entier positif !")
+            raise forms.ValidationError("Le montant ne peut être qu'un nombre positif !")
         
         return Rfc_montant
 
 
 class Service3Form(forms.ModelForm):
-    def __init__(self, reference_form, *args, **kwargs):
-        super(Service3Form, self).__init__(*args, **kwargs)
-        self.reference_form = reference_form
     
     class Meta:
         model = Prestation3
@@ -159,13 +161,10 @@ class Service3Form(forms.ModelForm):
         }
 
 
-Service3FormSet = formset_factory(Service3Form, extra=1, can_delete=True)
+Service3FormSet = formset_factory(Service3Form, extra=1)
 
 
 class Allocation2Form(forms.ModelForm):
-    def __init__(self, service2_form, *args, **kwargs):
-        super(Allocation2Form, self).__init__(*args, **kwargs)
-        self.service2_form = service2_form
     
     class Meta:
         model = Allocation2
@@ -192,11 +191,7 @@ class Allocation2Form(forms.ModelForm):
 
 EquipmentFormSet = formset_factory(Allocation2Form, extra=1, can_delete=True)
 
-
 class Allocation1Form(forms.ModelForm):
-    def __init__(self, service2_form, *args, **kwargs):
-        super(Allocation1Form, self).__init__(*args, **kwargs)
-        self.service2_form = service2_form
     
     class Meta:
         model = Allocation1
@@ -222,7 +217,6 @@ class Allocation1Form(forms.ModelForm):
 
 
 StaffFormSet = formset_factory(Allocation1Form, extra=1, can_delete=True)
-
 
 class EquipmentForm(forms.ModelForm):
     
@@ -308,6 +302,6 @@ class Service2Form(forms.ModelForm):
         Ptn2_tarif = self.cleaned_data.get('Ptn2_tarif')
 
         if Ptn2_tarif <= 0 :
-            raise forms.ValidationError("Le tarif ne peut être qu'un entier positif !")
+            raise forms.ValidationError("Le tarif ne peut être qu'un nombre positif !")
         
         return Ptn2_tarif

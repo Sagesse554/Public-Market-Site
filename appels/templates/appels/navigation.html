@@ -15,11 +15,22 @@
           <div class="collapse navbar-collapse pt-3 pb-2 py-lg-0 w-100" id="navigation">
             <ul class="navbar-nav navbar-nav-hover ms-lg-12 ps-lg-5 w-100">
 
+              {% if request.user.is_authenticated %}
+                {% if request.user.Ent_numero.Ent_numero.Rgs_numero == '1613978901' %}
+                <li class="nav-item">
+                  <a class="nav-link ps-2 d-flex justify-content-between align-items-center"
+                    href="{% url 'projets' %}">
+                    Projets
+                  </a>
+                </li>
+                {% endif %}
+              {% endif %}
+
               <li class="nav-item dropdown dropdown-hover mx-2">
 
                 <a class="nav-link ps-2 d-flex justify-content-between cursor-pointer align-items-center"
                   href="javascript:;" id="dropdownMenuPages" data-bs-toggle="dropdown" aria-expanded="false">
-                  Appels
+                  Marchés
                   <img src="{% static 'img/down-arrow-dark.svg' %}" alt="down-arrow" class="arrow ms-1">
                 </a>
 
@@ -55,7 +66,9 @@
                     </div>
 
                     <div class="dropdown-header text-dark font-weight-bolder d-flex justify-content-cente align-items-center px-0 mt-3">
+                    
                       <div class="d-inline-block">
+                    
                         <div class="icon icon-shape icon-xs border-radius-md bg-gradient-primary text-center me-2 d-flex align-items-center justify-content-center ps-0">
                           <svg width="12px" height="12px" viewBox="0 0 42 42" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
                             <title>offer</title>
@@ -87,12 +100,47 @@
               </li>
 
               {% if request.user.is_authenticated %}
+                {% if request.user.Ent_numero.Ent_numero.Rgs_numero != '1613978901' %}
+                <li class="nav-item">
+                  <a class="nav-link ps-2 d-flex justify-content-between align-items-center"
+                    href="{% url 'offres' %}">
+                    Offres
+                  </a>
+                </li>
+                {% endif %}
+              <li class="nav-item">
+                <a class="nav-link ps-2 d-flex justify-content-between align-items-center"
+                  href="{% url 'contrats' %}">
+                  Contrats
+                </a>
+              </li>
+                {% if request.user.Ent_numero.Ent_numero.Rgs_numero == '1613978901' %}
+                <li class="nav-item">
+                  <a class="nav-link ps-2 d-flex justify-content-between align-items-center"
+                    href="{% url 'entreprises' %}">
+                    Entreprises
+                  </a>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                  <a class="nav-link ps-2 d-flex justify-content-between align-items-center"
+                    href="{% url 'entreprise' %}?ent={{request.user.Ent_numero.Ent_numero.Rgs_numero}}">
+                    Entreprise
+                  </a>
+                </li>
+                {% endif %}
+              <li class="nav-item">
+                <a class="nav-link ps-2 d-flex justify-content-between align-items-center"
+                  href="{% url 'profil' %}?username={{request.user.username}}">
+                  Profil
+                </a>
+              </li>
               <li class="nav-item ms-lg-auto">
                 <a class="nav-link nav-link-icon me-2"
                   href="{% url 'signout' %}">
                   <i class="fa fa-sign-out me-1"></i>
                   <p class="d-inline text-sm z-index-1 font-weight-bold" data-bs-toggle="tooltip"
-                    data-bs-placement="bottom" title="Logout">Logout</p>
+                    data-bs-placement="bottom" title="Logout">Log Out</p>
                 </a>
               </li>
               {% else %}
@@ -101,7 +149,7 @@
                   href="{% url 'signin' %}">
                   <i class="fa fa-sign-in me-1"></i>
                   <p class="d-inline text-sm z-index-1 font-weight-bold" data-bs-toggle="tooltip"
-                    data-bs-placement="bottom" title="Login">Login</p>
+                    data-bs-placement="bottom" title="Login">Log In</p>
                 </a>
               </li>
               {% endif %}

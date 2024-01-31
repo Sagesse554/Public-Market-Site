@@ -14,14 +14,14 @@
         <div class="col-xl-4 col-lg-5 col-md-7 d-flex flex-column mx-lg-0 mx-auto">
           <div class="card card-plain">
     
-            <div style="padding: 40px;"></div>
+            <div style="padding: 30px;"></div>
             <div class="card-header pb-0 text-left">
-              <h4 class="font-weight-bolder">Offer Call</h4>
-              <p class="mb-0">Enter the following details</p>
+              <h4 class="font-weight-bolder">Appel d'offre</h4>
+              <p class="mb-0">Entrez les détails suivants</p>
             </div>
               
             <div class="card-body">
-              <form method="post" action="#" role="form">
+              <form method="post" action="#" role="form" enctype="multipart/form-data">
 
                 {% csrf_token %}
   
@@ -38,21 +38,21 @@
 
               </form>
             </div>
+            <div style="padding: 20px;"></div>
 
           </div>
         </div>
 
         <div class="col-6 d-lg-flex d-none h-100 my-auto pe-0 position-absolute top-0 end-0 text-center justify-content-center flex-column">
-          <div class="position-relative bg-gradient-primary h-100 m-3 px-7 border-radius-lg d-flex flex-column justify-content-center">
+          <div class="position-relative h-100 m-3 px-7 border-radius-lg d-flex flex-column justify-content-center" style="background-color: plum;">
 
             <div>
 
               <div>
 
-                <div style="padding: 40px;"></div>
                 <div class="card-header pb-0 text-left">
-                  <h4 class="font-weight-bolder">Services</h4>
-                  <p class="mb-0">Enter the following details to create</p>
+                  <h4 class="font-weight-bolder">Prestation</h4>
+                  <p class="mb-0">Entrez les détails suivants pour en créer</p>
                 </div>
 
                 <div class="card-body">
@@ -68,7 +68,7 @@
                     {% endfor %}
       
                     <div class="text-center">
-                        <button type="submit" name="button1" class="btn btn-lg bg-gradient-primary btn-lg w-100 mt-4 mb-0">Create</button>
+                        <button type="submit" name="button1" class="btn btn-lg bg-gradient-primary btn-lg w-100 mt-4 mb-0">Créer</button>
                     </div>
 
                   </form>
@@ -78,9 +78,10 @@
 
               <div>
 
+                <div style="padding: 20px;"></div>
                 <div class="card-header pb-0 text-left">
-                  <h4 class="font-weight-bolder">Service Categories</h4>
-                  <p class="mb-0">Enter the following details to create</p>
+                  <h4 class="font-weight-bolder">Catégories de Prestation</h4>
+                  <p class="mb-0">Entrez les détails suivants pour en créer</p>
                 </div>
 
                 <div class="card-body">
@@ -96,7 +97,7 @@
                     {% endfor %}
       
                     <div class="text-center">
-                        <button type="submit" name="button2" class="btn btn-lg bg-gradient-primary btn-lg w-100 mt-4 mb-0">Create</button>
+                        <button type="submit" name="button2" class="btn btn-lg bg-gradient-primary btn-lg w-100 mt-4 mb-0">Créer</button>
                     </div>
 
                   </form>
@@ -110,9 +111,10 @@
               <div>
                 <div>
 
+                <div style="padding: 20px;"></div>
                   <div class="card-header pb-0 text-left">
-                    <h4 class="font-weight-bolder">Criteria</h4>
-                    <p class="mb-0">Enter the following details to create</p>
+                    <h4 class="font-weight-bolder">Critères</h4>
+                    <p class="mb-0">Entrez les détails suivants pour en créer</p>
                   </div>
 
                   <div class="card-body">
@@ -128,7 +130,8 @@
                       {% endfor %}
 
                       <div class="text-center">
-                          <button type="submit" name="button3" class="btn btn-lg bg-gradient-primary btn-lg w-100 mt-4 mb-0">Create</button>
+                        <input type="hidden" name="pjt" value="{{ pjt }}">
+                        <button type="submit" name="button3" class="btn btn-lg bg-gradient-primary btn-lg w-100 mt-4 mb-0">Créer</button>
                       </div>
 
                     </form>
